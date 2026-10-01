@@ -27,86 +27,65 @@
       background: #e8e6f2;
       color: #2a2a3e;
       line-height: 1.6;
-      padding: 0;
       overflow-x: hidden;
       position: relative;
       min-height: 100vh;
     }
 
-    /* ============ ANIMATED MOVING BACKGROUND ============ */
+    /* ============ LIGHTWEIGHT ANIMATED BACKGROUND ============ */
     .bg-layer {
       position: fixed;
       inset: 0;
       z-index: 0;
       pointer-events: none;
       overflow: hidden;
-    }
-
-    .bg-gradient {
-      position: absolute;
-      inset: 0;
       background: linear-gradient(135deg, #e8e6f2, #f0e6f5, #e6eef2, #f2e8e6);
-      background-size: 400% 400%;
-      animation: gradientShift 30s ease infinite;
-    }
-
-    @keyframes gradientShift {
-      0% {
-        background-position: 0% 50%;
-      }
-
-      50% {
-        background-position: 100% 50%;
-      }
-
-      100% {
-        background-position: 0% 50%;
-      }
     }
 
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(100px);
-      opacity: 0.5;
+      filter: blur(60px);
+      opacity: 0.4;
       will-change: transform;
+      transform: translateZ(0);
     }
 
     .blob-1 {
-      width: 520px;
-      height: 520px;
+      width: 380px;
+      height: 380px;
       background: #b8b0ff;
-      top: -180px;
-      left: -100px;
-      animation: drift1 26s ease-in-out infinite;
+      top: -120px;
+      left: -80px;
+      animation: drift1 30s ease-in-out infinite;
     }
 
     .blob-2 {
-      width: 460px;
-      height: 460px;
+      width: 340px;
+      height: 340px;
       background: #ffb8d1;
       top: 40%;
-      right: -150px;
-      animation: drift2 32s ease-in-out infinite;
+      right: -120px;
+      animation: drift2 36s ease-in-out infinite;
     }
 
     .blob-3 {
-      width: 430px;
-      height: 430px;
+      width: 320px;
+      height: 320px;
       background: #ffd4a3;
-      bottom: -120px;
+      bottom: -100px;
       left: 30%;
-      animation: drift3 28s ease-in-out infinite;
+      animation: drift3 32s ease-in-out infinite;
     }
 
     .blob-4 {
-      width: 360px;
-      height: 360px;
+      width: 260px;
+      height: 260px;
       background: #a3e6d4;
       top: 15%;
       left: 45%;
-      opacity: 0.4;
-      animation: drift4 24s ease-in-out infinite;
+      opacity: 0.3;
+      animation: drift4 28s ease-in-out infinite;
     }
 
     @keyframes drift1 {
@@ -116,16 +95,8 @@
         transform: translate(0, 0) scale(1);
       }
 
-      25% {
-        transform: translate(120px, 80px) scale(1.15);
-      }
-
       50% {
-        transform: translate(60px, 200px) scale(1);
-      }
-
-      75% {
-        transform: translate(-40px, 100px) scale(0.95);
+        transform: translate(80px, 60px) scale(1.1);
       }
     }
 
@@ -136,12 +107,8 @@
         transform: translate(0, 0) scale(1);
       }
 
-      33% {
-        transform: translate(-100px, 150px) scale(1.1);
-      }
-
-      66% {
-        transform: translate(-50px, -80px) scale(0.95);
+      50% {
+        transform: translate(-70px, 100px) scale(1.08);
       }
     }
 
@@ -153,7 +120,7 @@
       }
 
       50% {
-        transform: translate(180px, -100px) scale(1.15);
+        transform: translate(120px, -70px) scale(1.1);
       }
     }
 
@@ -164,12 +131,18 @@
         transform: translate(0, 0) scale(1);
       }
 
-      33% {
-        transform: translate(-80px, 120px) scale(1.1);
+      50% {
+        transform: translate(-60px, 80px) scale(1.05);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .blob {
+        animation: none;
       }
 
-      66% {
-        transform: translate(100px, -60px) scale(0.9);
+      html {
+        scroll-behavior: auto;
       }
     }
 
@@ -398,7 +371,7 @@
       border: 1px solid #f0edff;
       border-radius: 24px;
       padding: 2rem 1.8rem;
-      transition: all 0.4s cubic-bezier(0.34, 1.4, 0.64, 1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       position: relative;
       box-shadow: 0 10px 30px -15px rgba(139, 124, 246, 0.25);
     }
@@ -745,13 +718,12 @@
       margin-top: 1.5rem;
     }
 
-    /* PROJECT CARD */
     .project-card {
       background: #ffffff;
       border: 1px solid #f0edff;
       border-radius: 28px;
       padding: 1.8rem 1.6rem 2rem;
-      transition: all 0.4s cubic-bezier(0.34, 1.4, 0.64, 1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -869,13 +841,14 @@
       height: auto;
       border-radius: 18px;
       transition: transform 0.5s ease;
+      content-visibility: auto;
     }
 
     .project-card:hover .preview-img-wrap img {
       transform: scale(1.05);
     }
 
-    /* ============ CONTRACT CAROUSEL (INSIDE MODAL ONLY) ============ */
+    /* ============ CAROUSEL (INSIDE MODALS) ============ */
     .contract-carousel-wrap {
       position: relative;
       margin-bottom: 2rem;
@@ -910,15 +883,12 @@
       border-radius: 20px;
     }
 
-    /* Feature label overlay */
     .contract-slide-label {
       position: absolute;
       bottom: 1rem;
       left: 1rem;
       right: 1rem;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: #ffffff;
       border-radius: 14px;
       padding: 0.8rem 1.1rem;
       display: flex;
@@ -953,7 +923,6 @@
       margin-top: 0.15rem;
     }
 
-    /* Carousel arrows */
     .contract-controls {
       position: absolute;
       top: 50%;
@@ -971,8 +940,7 @@
       width: 2.6rem;
       height: 2.6rem;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
+      background: #ffffff;
       border: 1px solid #ece9ff;
       color: #6a5ce6;
       display: inline-flex;
@@ -992,7 +960,6 @@
       transform: scale(1.1);
     }
 
-    /* Dots */
     .contract-dots {
       display: flex;
       justify-content: center;
@@ -1041,7 +1008,7 @@
       border-radius: 20px;
       padding: 0.9rem;
       text-align: center;
-      transition: all 0.35s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
       box-shadow: 0 6px 18px -10px rgba(139, 124, 246, 0.2);
     }
 
@@ -1147,9 +1114,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(42, 42, 62, 0.55);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(42, 42, 62, 0.7);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1157,7 +1122,7 @@
       z-index: 1000;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.35s ease, visibility 0.35s ease;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     .modal-overlay.active {
@@ -1176,8 +1141,9 @@
       padding: 2.5rem;
       position: relative;
       box-shadow: 0 40px 80px -20px rgba(139, 124, 246, 0.5);
-      transform: translateY(30px) scale(0.95);
-      transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1);
+      transform: translateY(20px) scale(0.98);
+      transition: transform 0.3s ease;
+      -webkit-overflow-scrolling: touch;
     }
 
     .modal-overlay.active .modal-box {
@@ -1319,7 +1285,7 @@
       border-radius: 16px;
       padding: 1.2rem 1rem;
       text-align: center;
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
     .modal-feature:hover {
@@ -1413,9 +1379,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: #ffffff;
       color: #6a5ce6;
       font-weight: 600;
       font-size: 0.78rem;
@@ -1462,21 +1426,19 @@
       color: white;
     }
 
-    /* LIGHTBOX */
+    /* ============ LIGHTBOX — FIXED CLOSE BUTTON ============ */
     .lightbox {
       position: fixed;
       inset: 0;
-      background: rgba(42, 42, 62, 0.9);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
+      background: rgba(30, 30, 45, 0.94);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2rem;
+      padding: 3.5rem 2rem 2rem;
       z-index: 2000;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.35s ease, visibility 0.35s ease;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     .lightbox.active {
@@ -1491,8 +1453,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      transform: scale(0.9);
-      transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
     }
 
     .lightbox.active .lightbox-content {
@@ -1501,14 +1463,15 @@
 
     .lightbox-content img {
       max-width: 90vw;
-      max-height: 78vh;
+      max-height: 72vh;
       width: auto;
       height: auto;
       object-fit: contain;
-      border-radius: 20px;
-      box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.5);
+      border-radius: 16px;
+      box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
       background: #ffffff;
       border: 4px solid #ffffff;
+      display: block;
     }
 
     .lightbox-caption {
@@ -1529,55 +1492,59 @@
       margin-top: 0.25rem;
     }
 
+    /* 
+      FIX: Close button is now FIXED to the viewport, not the image.
+      This guarantees it's always visible in the top-right of the screen,
+      never cropped, no matter how tall the image is.
+    */
     .lightbox-close {
-      position: absolute;
-      top: -1rem;
-      right: -1rem;
+      position: fixed;
+      top: 1.2rem;
+      right: 1.2rem;
       width: 3rem;
       height: 3rem;
       border-radius: 50%;
       background: linear-gradient(135deg, #8b7cf6, #a89bff);
-      border: none;
+      border: 2px solid #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       color: white;
       font-size: 1.1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(139, 124, 246, 0.6);
-      z-index: 10;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+      z-index: 2100;
     }
 
     .lightbox-close:hover {
-      transform: rotate(90deg) scale(1.1);
+      transform: rotate(90deg) scale(1.08);
+      box-shadow: 0 10px 30px rgba(139, 124, 246, 0.7);
     }
 
     .lightbox-nav {
-      position: absolute;
+      position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      width: 3.2rem;
-      height: 3.2rem;
+      width: 3rem;
+      height: 3rem;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.35);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      z-index: 10;
+      z-index: 2100;
     }
 
     .lightbox-nav:hover {
       background: linear-gradient(135deg, #8b7cf6, #a89bff);
-      color: white;
       border-color: transparent;
-      transform: translateY(-50%) scale(1.1);
+      transform: translateY(-50%) scale(1.08);
       box-shadow: 0 10px 30px rgba(139, 124, 246, 0.6);
     }
 
@@ -1816,35 +1783,46 @@
         padding: 0.85rem 1.4rem;
       }
 
+      /* Lightbox mobile */
       .lightbox {
-        padding: 1rem;
+        padding: 4rem 0.8rem 1.5rem;
       }
 
       .lightbox-content img {
-        max-width: 95vw;
-        max-height: 70vh;
+        max-width: 94vw;
+        max-height: 62vh;
         border-radius: 14px;
-      }
-
-      .lightbox-nav {
-        width: 2.5rem;
-        height: 2.5rem;
-        font-size: 0.9rem;
-      }
-
-      .lightbox-prev {
-        left: 0.5rem;
-      }
-
-      .lightbox-next {
-        right: 0.5rem;
+        border-width: 3px;
       }
 
       .lightbox-close {
-        top: -0.7rem;
-        right: -0.7rem;
+        top: 0.8rem;
+        right: 0.8rem;
+        width: 2.6rem;
+        height: 2.6rem;
+        font-size: 0.95rem;
+      }
+
+      .lightbox-nav {
         width: 2.4rem;
         height: 2.4rem;
+        font-size: 0.85rem;
+      }
+
+      .lightbox-prev {
+        left: 0.4rem;
+      }
+
+      .lightbox-next {
+        right: 0.4rem;
+      }
+
+      .lightbox-caption {
+        font-size: 0.9rem;
+      }
+
+      .lightbox-caption .lightbox-sub {
+        font-size: 0.72rem;
       }
     }
   </style>
@@ -1853,7 +1831,6 @@
 <body>
 
   <div class="bg-layer">
-    <div class="bg-gradient"></div>
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="blob blob-3"></div>
@@ -2013,12 +1990,11 @@
 
       <div class="projects-grid">
 
-        <!-- Internship 1: Pre-Assessment Website -->
         <article class="project-card">
           <div class="project-icon"><i class="fas fa-globe"></i></div>
           <h3>Pre-Assessment Website</h3>
           <div class="preview-img-wrap">
-            <img src="html.png" alt="Pre-Assessment Website preview"
+            <img src="html.png" alt="Pre-Assessment Website preview" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add html.png here';">
           </div>
           <p>A web-based FRS Pre-Assessment developed using HTML, CSS, and JavaScript during my internship at
@@ -2033,17 +2009,13 @@
           </button>
         </article>
 
-        <!-- Internship 2: Client Contract — thumbnail is ONLY client.png -->
         <article class="project-card">
           <div class="project-icon"><i class="fas fa-file-signature"></i></div>
           <h3>Client Contract</h3>
-
-          <!-- Single static thumbnail -->
           <div class="preview-img-wrap">
-            <img src="client.png" alt="Client Contract preview"
+            <img src="client.png" alt="Client Contract preview" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add client.png here';">
           </div>
-
           <p>A digital client contract system where clients can fill in their information, pick dates, and sign
             interactively on a digital sign board.</p>
           <div class="project-tags">
@@ -2056,12 +2028,11 @@
           </button>
         </article>
 
-        <!-- Internship 3: E-Book -->
         <article class="project-card">
           <div class="project-icon"><i class="fas fa-book-open"></i></div>
           <h3>Storybook E-book</h3>
           <div class="preview-img-wrap">
-            <img src="e-book.png" alt="Digital Values E-Book cover"
+            <img src="e-book.png" alt="Digital Values E-Book cover" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add e-book.png here';">
           </div>
           <p>An interactive flipbook developed during my internship — featuring animated illustrations, page
@@ -2095,12 +2066,11 @@
 
       <div class="projects-grid">
 
-        <!-- Personal 1: 2D Adventure Game -->
         <article class="project-card">
           <div class="project-icon"><i class="fas fa-dragon"></i></div>
           <h3>2D Adventure Game</h3>
           <div class="preview-img-wrap">
-            <img src="2d.png" alt="2D Unity Educational Game preview"
+            <img src="2d.png" alt="2D Unity Educational Game preview" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add 2d.png here';">
           </div>
           <p>A 2D educational game built in Unity where players interact with NPCs, explore the world, find chests, and
@@ -2115,12 +2085,11 @@
           </button>
         </article>
 
-        <!-- Personal 2: TearDrop Toys -->
         <article class="project-card">
           <div class="project-icon"><i class="fas fa-cart-shopping"></i></div>
           <h3>TearDrop Toys</h3>
           <div class="preview-img-wrap">
-            <img src="cry.png" alt="TearDrop Toys e-commerce preview"
+            <img src="cry.png" alt="TearDrop Toys e-commerce preview" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add cry.png here';">
           </div>
           <p>A PHP-based shopping website developed during my 2nd year of college. Features separate customer and admin
@@ -2159,11 +2128,11 @@
           <div class="model-item">
             <div class="model-pair">
               <div class="model-click" onclick="openLightbox('donut.png', 'Donut — Wireframe', 'Blender 3D Model')">
-                <img src="donut.png" alt="Donut wireframe"
+                <img src="donut.png" alt="Donut wireframe" loading="lazy"
                   onerror="this.style.background='#f5f3ff'; this.alt='Add donut.png';">
               </div>
               <div class="model-click" onclick="openLightbox('donut1.png', 'Donut — Render', 'Blender 3D Model')">
-                <img src="donut1.png" alt="Donut rendered"
+                <img src="donut1.png" alt="Donut rendered" loading="lazy"
                   onerror="this.style.background='#f5f3ff'; this.alt='Add donut1.png';">
               </div>
             </div>
@@ -2174,11 +2143,11 @@
           <div class="model-item">
             <div class="model-pair">
               <div class="model-click" onclick="openLightbox('chest.png', 'Chest — Wireframe', 'Blender 3D Model')">
-                <img src="chest.png" alt="Chest wireframe"
+                <img src="chest.png" alt="Chest wireframe" loading="lazy"
                   onerror="this.style.background='#f5f3ff'; this.alt='Add chest.png';">
               </div>
               <div class="model-click" onclick="openLightbox('chest1.png', 'Chest — Render', 'Blender 3D Model')">
-                <img src="chest1.png" alt="Chest rendered"
+                <img src="chest1.png" alt="Chest rendered" loading="lazy"
                   onerror="this.style.background='#f5f3ff'; this.alt='Add chest1.png';">
               </div>
             </div>
@@ -2188,7 +2157,7 @@
 
           <div class="model-item model-single">
             <div class="model-click" onclick="openLightbox('kubo.png', 'Kubo', 'Blender 3D Model')">
-              <img src="kubo.png" alt="Kubo 3D model"
+              <img src="kubo.png" alt="Kubo 3D model" loading="lazy"
                 onerror="this.style.background='#f5f3ff'; this.alt='Add kubo.png';">
             </div>
             <div class="model-label">Kubo</div>
@@ -2197,7 +2166,7 @@
 
           <div class="model-item model-single">
             <div class="model-click" onclick="openLightbox('chair.png', 'Chair', 'Blender 3D Model')">
-              <img src="chair.png" alt="Chair 3D model"
+              <img src="chair.png" alt="Chair 3D model" loading="lazy"
                 onerror="this.style.background='#f5f3ff'; this.alt='Add chair.png';">
             </div>
             <div class="model-label">Chair</div>
@@ -2206,7 +2175,8 @@
 
           <div class="model-item model-single">
             <div class="model-click" onclick="openLightbox('tv.png', 'TV', 'Blender 3D Model')">
-              <img src="tv.png" alt="TV 3D model" onerror="this.style.background='#f5f3ff'; this.alt='Add tv.png';">
+              <img src="tv.png" alt="TV 3D model" loading="lazy"
+                onerror="this.style.background='#f5f3ff'; this.alt='Add tv.png';">
             </div>
             <div class="model-label">TV</div>
             <div class="model-sub">3D model</div>
@@ -2215,11 +2185,11 @@
           <div class="model-item">
             <div class="model-pair">
               <div class="model-click" onclick="openLightbox('axe.png', 'Axe', 'Blender 3D Model')">
-                <img src="axe.png" alt="Axe 3D model"
+                <img src="axe.png" alt="Axe 3D model" loading="lazy"
                   onerror="this.style.background='#f5f3ff'; this.alt='Add axe.png';">
               </div>
               <div class="model-click" onclick="openLightbox('axe 2.png', 'Axe 2', 'Blender 3D Model')">
-                <img src="axe 2.png" alt="Axe 2 3D model"
+                <img src="axe 2.png" alt="Axe 2 3D model" loading="lazy"
                   onerror="this.style.background='#f5f3ff'; this.alt='Add axe 2.png';">
               </div>
             </div>
@@ -2229,7 +2199,7 @@
 
           <div class="model-item model-single">
             <div class="model-click" onclick="openLightbox('room.png', 'Room', 'Blender 3D Model')">
-              <img src="room.png" alt="Room 3D model"
+              <img src="room.png" alt="Room 3D model" loading="lazy"
                 onerror="this.style.background='#f5f3ff'; this.alt='Add room.png';">
             </div>
             <div class="model-label">Room</div>
@@ -2238,7 +2208,7 @@
 
           <div class="model-item model-single">
             <div class="model-click" onclick="openLightbox('girl.png', 'Girl', 'Blender 3D Model')">
-              <img src="girl.png" alt="Girl 3D model"
+              <img src="girl.png" alt="Girl 3D model" loading="lazy"
                 onerror="this.style.background='#f5f3ff'; this.alt='Add girl.png';">
             </div>
             <div class="model-label">Girl</div>
@@ -2247,7 +2217,7 @@
 
           <div class="model-item model-single">
             <div class="model-click" onclick="openLightbox('barrel.png', 'Barrel', 'Blender 3D Model')">
-              <img src="barrel.png" alt="Barrel 3D model"
+              <img src="barrel.png" alt="Barrel 3D model" loading="lazy"
                 onerror="this.style.background='#f5f3ff'; this.alt='Add barrel.png';">
             </div>
             <div class="model-label">Barrel</div>
@@ -2256,7 +2226,7 @@
 
           <div class="model-item model-single">
             <div class="model-click" onclick="openLightbox('lights.png', 'Lights', 'Blender 3D Model')">
-              <img src="lights.png" alt="Lights 3D model"
+              <img src="lights.png" alt="Lights 3D model" loading="lazy"
                 onerror="this.style.background='#f5f3ff'; this.alt='Add lights.png';">
             </div>
             <div class="model-label">Lights</div>
@@ -2265,7 +2235,7 @@
 
           <div class="model-item model-single">
             <div class="model-click" onclick="openLightbox('man face.png', 'Man Face', 'Blender 3D Model')">
-              <img src="man face.png" alt="Man Face 3D model"
+              <img src="man face.png" alt="Man Face 3D model" loading="lazy"
                 onerror="this.style.background='#f5f3ff'; this.alt='Add man face.png';">
             </div>
             <div class="model-label">Man Face</div>
@@ -2274,17 +2244,16 @@
 
           <div class="model-item model-single">
             <div class="model-click" onclick="openLightbox('man walking.png', 'Walking Man', 'Blender 3D Model')">
-              <img src="man walking.png" alt="Walking Man 3D model"
+              <img src="man walking.png" alt="Walking Man 3D model" loading="lazy"
                 onerror="this.style.background='#f5f3ff'; this.alt='Add man walking.png';">
             </div>
             <div class="model-label">Walking Man</div>
             <div class="model-sub">3D model</div>
           </div>
 
-          <!-- NEW: Man full body -->
           <div class="model-item model-single">
             <div class="model-click" onclick="openLightbox('Man full body.png', 'Man — Full Body', 'Blender 3D Model')">
-              <img src="Man full body.png" alt="Man full body 3D model"
+              <img src="Man full body.png" alt="Man full body 3D model" loading="lazy"
                 onerror="this.style.background='#f5f3ff'; this.alt='Add Man full body.png';">
             </div>
             <div class="model-label">Man full body</div>
@@ -2347,7 +2316,7 @@
       <p class="modal-subtitle">A 2D educational game developed in Unity where players interact with NPCs, explore the
         world, and learn about health — one question at a time.</p>
       <div class="modal-video-wrap">
-        <video controls preload="metadata" poster="2d.png">
+        <video controls preload="none" poster="2d.png">
           <source src="unity.mp4" type="video/mp4">
         </video>
       </div>
@@ -2392,7 +2361,7 @@
       <p class="modal-subtitle">A web-based assessment developed during my internship at CloudSwyft, in collaboration
         with my co-intern.</p>
       <div class="modal-video-wrap">
-        <video controls preload="metadata" poster="html.png">
+        <video controls preload="none" poster="html.png">
           <source src="assessment.mp4" type="video/mp4">
         </video>
       </div>
@@ -2431,7 +2400,7 @@
     </div>
   </div>
 
-  <!-- MODAL: CLIENT CONTRACT — Carousel here -->
+  <!-- MODAL: CLIENT CONTRACT -->
   <div class="modal-overlay" id="contractModal" onclick="closeModalOutside(event, 'contractModal')">
     <div class="modal-box">
       <button class="modal-close" onclick="closeContractModal()" aria-label="Close"><i
@@ -2441,13 +2410,11 @@
       <p class="modal-subtitle">A digital client contract system with interactive information input, date selection, a
         sign-on-screen feature, and built-in security.</p>
 
-      <!-- Carousel inside the modal -->
       <div class="contract-carousel-wrap">
         <div class="contract-carousel" id="contractCarousel">
 
-          <!-- Slide 1: Client Info -->
           <div class="contract-slide active">
-            <img src="client.png" alt="Client info input"
+            <img src="client.png" alt="Client info input" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add client.png';">
             <div class="contract-slide-label">
               <i class="fas fa-user-pen"></i>
@@ -2458,9 +2425,8 @@
             </div>
           </div>
 
-          <!-- Slide 2: Date Selection -->
           <div class="contract-slide">
-            <img src="details.png" alt="Date picker"
+            <img src="details.png" alt="Date picker" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add details.png';">
             <div class="contract-slide-label">
               <i class="fas fa-calendar-days"></i>
@@ -2471,9 +2437,8 @@
             </div>
           </div>
 
-          <!-- Slide 3: Sign Board -->
           <div class="contract-slide">
-            <img src="sign.png" alt="Interactive sign board"
+            <img src="sign.png" alt="Interactive sign board" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add sign.png';">
             <div class="contract-slide-label">
               <i class="fas fa-signature"></i>
@@ -2484,9 +2449,8 @@
             </div>
           </div>
 
-          <!-- Slide 4: Security (NEW) -->
           <div class="contract-slide">
-            <img src="security.png" alt="Security feature"
+            <img src="security.png" alt="Security feature" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add security.png';">
             <div class="contract-slide-label">
               <i class="fas fa-shield-halved"></i>
@@ -2499,7 +2463,6 @@
 
         </div>
 
-        <!-- Arrows -->
         <div class="contract-controls">
           <button class="contract-arrow" onclick="moveContract(-1)" aria-label="Previous">
             <i class="fas fa-chevron-left"></i>
@@ -2509,7 +2472,6 @@
           </button>
         </div>
 
-        <!-- Dots (now 4) -->
         <div class="contract-dots" id="contractDots">
           <button class="contract-dot active" onclick="goToContractSlide(0)" aria-label="Slide 1"></button>
           <button class="contract-dot" onclick="goToContractSlide(1)" aria-label="Slide 2"></button>
@@ -2563,13 +2525,11 @@
       <p class="modal-subtitle">A PHP-based shopping website developed during my 2nd year of college as a school
         project.</p>
 
-      <!-- Carousel inside the modal (replaces video) -->
       <div class="contract-carousel-wrap">
         <div class="contract-carousel" id="toyCarousel">
 
-          <!-- Slide 1: Homepage -->
           <div class="contract-slide active">
-            <img src="tr1.png" alt="TearDrop Toys homepage"
+            <img src="tr1.png" alt="TearDrop Toys homepage" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add tr1.png';">
             <div class="contract-slide-label">
               <i class="fas fa-store"></i>
@@ -2580,9 +2540,8 @@
             </div>
           </div>
 
-          <!-- Slide 2: Product Listing -->
           <div class="contract-slide">
-            <img src="tr2.png" alt="Product listing page"
+            <img src="tr2.png" alt="Product listing page" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add tr2.png';">
             <div class="contract-slide-label">
               <i class="fas fa-th-large"></i>
@@ -2593,9 +2552,8 @@
             </div>
           </div>
 
-          <!-- Slide 3: Product Details -->
           <div class="contract-slide">
-            <img src="tr3.png" alt="Product details page"
+            <img src="tr3.png" alt="Product details page" loading="lazy"
               onerror="this.style.background='#f5f3ff'; this.alt='Add tr3.png';">
             <div class="contract-slide-label">
               <i class="fas fa-info-circle"></i>
@@ -2606,9 +2564,9 @@
             </div>
           </div>
 
-          <!-- Slide 4: Shopping Cart -->
           <div class="contract-slide">
-            <img src="tr4.png" alt="Shopping cart" onerror="this.style.background='#f5f3ff'; this.alt='Add tr4.png';">
+            <img src="tr4.png" alt="Shopping cart" loading="lazy"
+              onerror="this.style.background='#f5f3ff'; this.alt='Add tr4.png';">
             <div class="contract-slide-label">
               <i class="fas fa-shopping-cart"></i>
               <div class="contract-slide-label-text">
@@ -2618,9 +2576,9 @@
             </div>
           </div>
 
-          <!-- Slide 5: Admin Panel -->
           <div class="contract-slide">
-            <img src="tr5.png" alt="Admin dashboard" onerror="this.style.background='#f5f3ff'; this.alt='Add tr5.png';">
+            <img src="tr5.png" alt="Admin dashboard" loading="lazy"
+              onerror="this.style.background='#f5f3ff'; this.alt='Add tr5.png';">
             <div class="contract-slide-label">
               <i class="fas fa-user-shield"></i>
               <div class="contract-slide-label-text">
@@ -2632,7 +2590,6 @@
 
         </div>
 
-        <!-- Arrows -->
         <div class="contract-controls">
           <button class="contract-arrow" onclick="moveToy(-1)" aria-label="Previous">
             <i class="fas fa-chevron-left"></i>
@@ -2642,7 +2599,6 @@
           </button>
         </div>
 
-        <!-- Dots (5 slides) -->
         <div class="contract-dots" id="toyDots">
           <button class="contract-dot active" onclick="goToToySlide(0)" aria-label="Slide 1"></button>
           <button class="contract-dot" onclick="goToToySlide(1)" aria-label="Slide 2"></button>
@@ -2683,7 +2639,7 @@
     </div>
   </div>
 
-  <!-- MODAL: E-BOOK (UPDATED — no MP4, links to interactive e-book) -->
+  <!-- MODAL: E-BOOK -->
   <div class="modal-overlay" id="ebookModal" onclick="closeModalOutside(event, 'ebookModal')">
     <div class="modal-box">
       <button class="modal-close" onclick="closeEbookModal()" aria-label="Close"><i class="fas fa-times"></i></button>
@@ -2692,10 +2648,9 @@
       <p class="modal-subtitle">An interactive flipbook developed during my internship — featuring animated
         illustrations, page transitions, and bilingual narration.</p>
 
-      <!-- E-Book Preview Card (replaces video) -->
       <div class="ebook-preview-wrap">
         <div class="ebook-preview-image">
-          <img src="e-book.png" alt="Digital Values E-Book preview"
+          <img src="e-book.png" alt="Digital Values E-Book preview" loading="lazy"
             onerror="this.style.background='#f5f3ff'; this.alt='Add e-book.png';">
           <div class="ebook-preview-overlay">
             <div class="ebook-preview-badge">
@@ -2840,7 +2795,6 @@
     function openContractModal() {
       document.getElementById('contractModal').classList.add('active');
       document.body.style.overflow = 'hidden';
-      // Reset carousel to first slide when opening
       showContractSlide(0);
     }
     function closeContractModal() {
@@ -2851,7 +2805,6 @@
     function openPhpModal() {
       document.getElementById('phpModal').classList.add('active');
       document.body.style.overflow = 'hidden';
-      // Reset carousel to first slide when opening
       showToySlide(0);
     }
     function closePhpModal() {
@@ -2948,12 +2901,10 @@
         if (e.key === 'ArrowLeft') navigateLightbox(-1);
         if (e.key === 'ArrowRight') navigateLightbox(1);
       }
-      // Arrow keys also control the contract carousel when open
       if (contractOpen) {
         if (e.key === 'ArrowLeft') moveContract(-1);
         if (e.key === 'ArrowRight') moveContract(1);
       }
-      // Arrow keys control the TearDrop Toys carousel when open
       if (toyOpen) {
         if (e.key === 'ArrowLeft') moveToy(-1);
         if (e.key === 'ArrowRight') moveToy(1);
